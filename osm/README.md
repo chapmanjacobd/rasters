@@ -26,7 +26,6 @@ wget https://raw.githubusercontent.com/chapmanjacobd/rasters/main/pop.tif
 wget https://raw.githubusercontent.com/chapmanjacobd/rasters/main/osm/walkable.tif.gz
 gzip -d ./walkable.tif.gz
 
-# NAME, ISO_A2, ECONOMY
 exactextract -r pop:pop.tif \
   -r variable:walkable.tif \
   -p ne_110m_countries.gpkg \
@@ -39,6 +38,23 @@ exactextract -r pop:pop.tif \
   -o countries_walkable.csv
 
 cat countries_walkable.csv
+```
+
+### Bonus: Create a map
+
+![Example](./example.jpg)
+
+```sh
+#awk 'NR==1{print}NR>1{sub(/nan/,"0");print}' countries_walkable.csv | sponge countries_walkable.csv
+ogr2ogr -append ne_110m_countries.gpkg countries_walkable.csv
+ogr2ogr -sql "
+    select cast(pop_sum as int) pop_sum
+        , cast(variable_min as int) variable_min
+        , cast(variable_max as int) variable_max
+        , cast(pop_weighted_mean as int) pop_weighted_mean
+        , output.*
+    from output left join countries_walkable w on output.NAME = w.NAME
+" final_output.geojson ne_110m_countries.gpkg
 ```
 
 #### Included Population (pop.tif) is WorldPop 2020
