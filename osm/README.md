@@ -21,23 +21,30 @@ These are raw counts. To make them useful you'll likey want to do population-wei
 https://github.com/isciences/exactextract
 
 ```sh
-wget https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_admin_0_countries.geojson
-wget https://raw.githubusercontent.com/chapmanjacobd/rasters/main/osm/drinking_water_yes.tif.gzip
+wget https://raw.githubusercontent.com/chapmanjacobd/rasters/main/ne_110m_countries.geojson
 wget https://raw.githubusercontent.com/chapmanjacobd/rasters/main/pop.tif
-gzip -d ./drinking_water_yes.tif.gzip
+wget https://raw.githubusercontent.com/chapmanjacobd/rasters/main/osm/walkable.tif.gz
+gzip -d ./walkable.tif.gz
 
 # NAME, ISO_A2, ECONOMY
 exactextract -r pop:pop.tif \
-  -r variable:drinking_water_yes.tif \
+  -r variable:walkable.tif \
   -p ne_10m_admin_0_countries.geojson \
   -f NAME \
   -s "sum(pop)" \
   -s "min(variable)" \
   -s "max(variable)" \
   -s "pop_weighted_mean=weighted_mean(variable,pop)" \
-  -o countries-drinking_water.geojson
+  -o countries-walkable.csv
 ```
 
-Included Population (pop.tif) is WorldPop 2020
+#### Included Population (pop.tif) is WorldPop 2020
 
     WorldPop (www.worldpop.org - School of Geography and Environmental Science, University of Southampton; Department of Geography and Geosciences, University of Louisville; Departement de Geographie, Universite de Namur) and Center for International Earth Science Information Network (CIESIN), Columbia University (2018). Global High Resolution Population Denominators Project - Funded by The Bill and Melinda Gates Foundation (OPP1134076). https://dx.doi.org/10.5258/SOTON/WP00647 Creative Commons Attribution 4.0
+
+#### For higher quality Geometry, try this
+
+```
+wget https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_admin_0_countries.geojson
+ogr2ogr -t_srs EPSG:3857 ne_10m_countries.geojson ne_10m_admin_0_countries.geojson -skiperrors && rm ne_10m_admin_0_countries.geojson
+```
