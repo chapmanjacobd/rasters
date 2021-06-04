@@ -1,6 +1,6 @@
 # rasters
 
-- PlaceCount Rasters
+- [PlaceCount Rasters](https://github.com/chapmanjacobd/rasters/blob/main/osm/README.md)
 
 - pop.tif Derived from WorldPop 2020
 
