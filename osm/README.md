@@ -49,8 +49,8 @@ cat countries_walkable.csv
 ogr2ogr -append ne_110m_countries.gpkg countries_walkable.csv
 ogr2ogr -sql "
     select cast(pop_sum as int) pop_sum
-        , cast(variable_min as int) variable_min
         , cast(variable_max as int) variable_max
+        , cast(variable_mean as int) variable_mean
         , cast(pop_weighted_mean as int) pop_weighted_mean
         , output.*
     from output left join countries_walkable w on output.NAME = w.NAME
