@@ -40,12 +40,11 @@ exactextract -r pop:pop.tif \
 cat countries_walkable.csv
 ```
 
-### Bonus: Create a map
+### Bonus: Create a country map
 
-![Example](./example1.jpg)
+![Example I](./example1.jpg)
 
 ```sh
-#awk 'NR==1{print}NR>1{sub(/nan/,"0");print}' countries_walkable.csv | sponge countries_walkable.csv
 ogr2ogr -append ne_110m_countries.gpkg countries_walkable.csv
 ogr2ogr -sql "
     select cast(pop_sum as int) pop_sum
@@ -55,6 +54,35 @@ ogr2ogr -sql "
         , output.*
     from output left join countries_walkable w on output.NAME = w.NAME
 " final_output.geojson ne_110m_countries.gpkg
+```
+
+### Bonus: Create a cities map
+
+![Example II](./example2.jpg)
+
+```sh
+wget https://raw.githubusercontent.com/chapmanjacobd/rasters/main/ne_cities.gpkg
+
+exactextract -r pop:pop.tif \
+  -r variable:walkable.tif \
+  -p ne_cities.gpkg \
+  -f ne_id \
+  -s "sum(pop)" \
+  -s "sum(variable)" \
+  -s "max(variable)" \
+  -s "mean(variable)" \
+  -s "pop_weighted_mean=weighted_mean(variable,pop)" \
+  -o countries_walkable.csv
+
+ogr2ogr -append ne_cities.gpkg countries_walkable.csv
+ogr2ogr -sql "
+    select cast(pop_sum as int) pop_sum
+        , cast(variable_max as int) variable_max
+        , cast(variable_mean as int) variable_mean
+        , cast(pop_weighted_mean as int) pop_weighted_mean
+        , output.*
+    from output left join countries_walkable w on output.ne_id = w.ne_id
+" final_output.geojson ne_cities.gpkg
 ```
 
 #### Included Population (pop.tif) is WorldPop 2020
