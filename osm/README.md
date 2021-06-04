@@ -21,7 +21,7 @@ These are raw counts. To make them useful you'll likey want to do population-wei
 https://github.com/isciences/exactextract
 
 ```sh
-wget https://raw.githubusercontent.com/chapmanjacobd/rasters/main/ne_110m_countries.geojson
+wget https://raw.githubusercontent.com/chapmanjacobd/rasters/main/ne_110m_countries.gpkg
 wget https://raw.githubusercontent.com/chapmanjacobd/rasters/main/pop.tif
 wget https://raw.githubusercontent.com/chapmanjacobd/rasters/main/osm/walkable.tif.gz
 gzip -d ./walkable.tif.gz
@@ -29,13 +29,16 @@ gzip -d ./walkable.tif.gz
 # NAME, ISO_A2, ECONOMY
 exactextract -r pop:pop.tif \
   -r variable:walkable.tif \
-  -p ne_10m_admin_0_countries.geojson \
+  -p ne_110m_countries.gpkg \
   -f NAME \
   -s "sum(pop)" \
-  -s "min(variable)" \
+  -s "sum(variable)" \
   -s "max(variable)" \
+  -s "mean(variable)" \
   -s "pop_weighted_mean=weighted_mean(variable,pop)" \
-  -o countries-walkable.csv
+  -o countries_walkable.csv
+
+cat countries_walkable.csv
 ```
 
 #### Included Population (pop.tif) is WorldPop 2020
