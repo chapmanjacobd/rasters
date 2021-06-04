@@ -40,7 +40,7 @@ exactextract -r pop:pop.tif \
 cat countries_walkable.csv
 ```
 
-### Bonus: Create a country map
+### Bonus I: Create a country map
 
 ![Example I](./example1.jpg)
 
@@ -56,7 +56,14 @@ ogr2ogr -sql "
 " final_output.geojson ne_110m_countries.gpkg
 ```
 
-### Bonus: Create a cities map
+#### For higher quality Geometry, try this
+
+```
+wget https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_admin_0_countries.geojson
+ogr2ogr -t_srs EPSG:3857 ne_10m_countries.geojson ne_10m_admin_0_countries.geojson -skiperrors && rm ne_10m_admin_0_countries.geojson
+```
+
+### Bonus II: Create a cities map
 
 ![Example II](./example2.jpg)
 
@@ -88,10 +95,3 @@ ogr2ogr -sql "
 #### Included Population (pop.tif) is WorldPop 2020
 
     WorldPop (www.worldpop.org - School of Geography and Environmental Science, University of Southampton; Department of Geography and Geosciences, University of Louisville; Departement de Geographie, Universite de Namur) and Center for International Earth Science Information Network (CIESIN), Columbia University (2018). Global High Resolution Population Denominators Project - Funded by The Bill and Melinda Gates Foundation (OPP1134076). https://dx.doi.org/10.5258/SOTON/WP00647 Creative Commons Attribution 4.0
-
-#### For higher quality Geometry, try this
-
-```
-wget https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_admin_0_countries.geojson
-ogr2ogr -t_srs EPSG:3857 ne_10m_countries.geojson ne_10m_admin_0_countries.geojson -skiperrors && rm ne_10m_admin_0_countries.geojson
-```
