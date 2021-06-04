@@ -2,10 +2,6 @@
 
 Generated from OpenStreetMap -- June 1 2021
 
-OpenStreetMap® is open data, licensed under the Open Data Commons Open Database License (ODbL) by the OpenStreetMap Foundation (OSMF).
-
-The copyright portion of _this_ work (PlaceCount Rasters) is placed under Open Data Commons Public Domain Dedication and License (PDDL)
-
 As seen on TV https://unli.xyz/city/calc/
 
 ## What is this
@@ -95,3 +91,8 @@ ogr2ogr -sql "
 #### Included Population (pop.tif) is WorldPop 2020
 
     WorldPop (www.worldpop.org - School of Geography and Environmental Science, University of Southampton; Department of Geography and Geosciences, University of Louisville; Departement de Geographie, Universite de Namur) and Center for International Earth Science Information Network (CIESIN), Columbia University (2018). Global High Resolution Population Denominators Project - Funded by The Bill and Melinda Gates Foundation (OPP1134076). https://dx.doi.org/10.5258/SOTON/WP00647 Creative Commons Attribution 4.0
+
+
+OpenStreetMap® is open data, licensed under the Open Data Commons Open Database License (ODbL) by the OpenStreetMap Foundation (OSMF).
+
+The copyright portion of _this_ work (PlaceCount Rasters) is placed under Open Data Commons Public Domain Dedication and License (PDDL)
