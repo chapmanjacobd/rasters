@@ -42,7 +42,7 @@ cat countries_walkable.csv
 
 ### Bonus: Create a map
 
-![Example](./example.jpg)
+![Example](./example1.jpg)
 
 ```sh
 #awk 'NR==1{print}NR>1{sub(/nan/,"0");print}' countries_walkable.csv | sponge countries_walkable.csv
