@@ -7,7 +7,7 @@
 - pop.tif Derived from WorldPop 2020
 
   ```sh
-  gdalwarp -dstnodata 0 -t_srs EPSG:3857 -tap -tr 1912.0 1912.0 -ot Int32 -r sum -co COMPRESS=DEFLATE ./ppp_2020_1km_Aggregated.tif ./pop.tif
+  gdalwarp -dstnodata 0 -t_srs EPSG:3857 -tap -tr 1000 1000 -ot Int32 -r sum -co COMPRESS=DEFLATE ./ppp_2020_1km_Aggregated.tif ./pop.tif
   gdal_edit.py -unsetnodata ./pop.tif
   ```
 
